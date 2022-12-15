@@ -33,7 +33,7 @@ function switchLine() {
 function addNewLine() {
     var pos
     if (!gMeme.lines.length) pos = {x: gElCanvas.width/2, y: 40}
-    else if (gMeme.lines.length === 1) pos = {x: gElCanvas.width/2, y: 410}
+    else if (gMeme.lines.length === 1) pos = {x: gElCanvas.width/2, y: gElCanvas.height -40}
     else pos = {x: gElCanvas.width/2, y: gElCanvas.height/2}
     var line = {
         txt: 'Enter Text',

@@ -6,15 +6,16 @@ function onInit() {
     gCtx = gElCanvas.getContext('2d')
     resizeCanvas()
     window.addEventListener('resize', () => {
-        resizeCanvas()
-        renderMeme()
+        if (gMeme) {
+            resizeCanvas()
+            renderMeme()
+        }
     })
     
 }
 
 function renderMeme() {
     var meme = getMeme()
-    console.log(meme)
     drawImg(meme.selectedImgId)
     setTimeout((meme) => {
         meme.lines.forEach(line => drawText(line))
