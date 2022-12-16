@@ -1,5 +1,4 @@
 renderGallery()
-
 function renderGallery() {
     const images = getImages()
     var htmlSTRs = images.map(image => {
@@ -12,3 +11,4 @@ function renderGallery() {
 })
     document.querySelector('.image-gallery').innerHTML = htmlSTRs.join('')
 }
+

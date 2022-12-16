@@ -1,3 +1,5 @@
+var gCurrMemeId
+
 let gElCanvas = document.getElementById('my-canvas')
 let gCtx = gElCanvas.getContext('2d')
 
@@ -95,11 +97,42 @@ function onTextChange(text) {
     renderMeme()
 }
 
+function onRandomMeme() {
+    document.querySelector('.gallery').hidden = true
+    document.querySelector('.editor').classList.add('flex')
+    gCurrMemeId = null
+    resizeCanvas()
+    initializeRandomMeme()
+    const firstLine = getMeme().lines[0]
+    document.querySelector('.text-input').value = firstLine.txt
+    document.querySelector('.font-select').value = 'Impact'
+    document.querySelector('.stroke-color input').value = firstLine.strokeColor
+    document.querySelector('.fill-color input').value = firstLine.fillColor
+    renderMeme()
+}
+
 function onImgSelect(imgId) {
     document.querySelector('.gallery').hidden = true
     document.querySelector('.editor').classList.add('flex')
+    gCurrMemeId = null
     resizeCanvas()
     initializeMeme(imgId)
+    renderMeme()
+}
+
+function onMemeSelect(id) {
+    document.querySelector('.gallery').hidden = true
+    document.querySelector('.editor').classList.add('flex')
+    gCurrMemeId = id
+    const savedMemes = loadFromLocalStorage(MEME_STORAGE_KEY)
+    const meme = savedMemes.find(meme => meme.id === id).meme
+    resizeCanvas()
+    setMeme(meme)
+    const firstLine = meme.lines[0]
+    document.querySelector('.text-input').value = firstLine.txt
+    document.querySelector('.font-select').value = 'Impact'
+    document.querySelector('.stroke-color input').value = firstLine.strokeColor
+    document.querySelector('.fill-color input').value = firstLine.fillColor
     renderMeme()
 }
 
@@ -111,3 +144,27 @@ function onBackToGallery() {
     document.querySelector('.fill-color input').value = '#ffffff'
     document.querySelector('.gallery').hidden = false
 }
+
+function onSaveMeme() {
+    let urlImage = gElCanvas.toDataURL('image/jpeg')
+    saveMeme(urlImage, gCurrMemeId)
+}
+
+function setCurrId(id) {
+    gCurrMemeId = id
+}
+
+function renderSavedMemes() {
+    const savedMemes = getSavedMemes()
+    if (!savedMemes) {
+        document.querySelector('.image-gallery').innerHTML = ''
+        return}
+    let htmlSTRs = savedMemes.map(meme => {
+        return `<article class="meme-temp" onclick="onMemeSelect('${meme.id}')">
+        <img src="${meme.imageUrl}">
+        <div class="info">${meme.date}</div>
+        </article>`
+    })
+    document.querySelector('.image-gallery').innerHTML = htmlSTRs.join('')
+}
+

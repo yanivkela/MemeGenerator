@@ -166,7 +166,8 @@ body.menu-open .main-nav ul {
 
 .meme-temp {
     position: relative;
-    width: 100%;
+    /* width: 100%; */
+    max-width: 20vh;
     overflow: hidden;
     border-radius: 10px;
     cursor: pointer;
@@ -192,6 +193,19 @@ body.menu-open .main-nav ul {
 
 .meme-temp:hover .info {
     transform: translateY(-100%);
+}
+
+.im-flexible-btn {
+    position: fixed;
+    width: 100px !important;
+    height: 40px;
+    bottom: 20px;
+    right: 20px;
+    border: 0;
+    border-radius: 2em;
+    background-color: rgb(46, 73, 142);
+    color: white;
+    cursor: pointer;
 }
 
 /* EDITOR */
@@ -456,6 +470,10 @@ canvas {
         color: #FF9826;
     }
     
+    .main-nav ul li.selected {
+        color: #FF9826;
+    }
+
     .main-nav ul li:not(:last-child) {
         margin-right: 50px;
     }

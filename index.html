@@ -19,12 +19,12 @@
               <path fill-rule="evenodd" clip-rule="evenodd" d="M7.699 7.003L13.864 13.168C14.055 13.36 14.055 13.672 13.864 13.864C13.672 14.056 13.36 14.056 13.168 13.864L7.004 7.699L0.839 13.864C0.647 14.056 0.335 14.056 0.144 13.864C-0.048 13.672 -0.048 13.36 0.144 13.168L6.309 7.003L0.144 0.84C-0.048 0.648 -0.048 0.336 0.144 0.144C0.335 -0.048 0.647 -0.048 0.839 0.144L7.004 6.308L13.168 0.144C13.36 -0.048 13.672 -0.048 13.864 0.144C14.055 0.336 14.055 0.648 13.864 0.84L7.699 7.003Z" fill="white"/>
               </svg>
               </div>
-            <li href="#">Memes</li>
+            <li onclick="onMemesClick(this)">Memes</li>
             <li class="menu-divider"><svg width="21" height="1" viewBox="0 0 21 1" fill="none" xmlns="http://www.w3.org/2000/svg">
               <line y1="0.5" x2="21" y2="0.5" stroke="white"/>
               </svg>
             </li>
-            <li class="selected" href="#">Gallery</li>
+            <li class="selected" onclick="onGalleryClick(this)">Gallery</li>
             <li class="menu-divider"><svg width="21" height="1" viewBox="0 0 21 1" fill="none" xmlns="http://www.w3.org/2000/svg">
               <line y1="0.5" x2="21" y2="0.5" stroke="white"/>
               </svg>
@@ -41,10 +41,22 @@
 
     <section class="gallery main-layout">
       <div class="gallery-search">
-        <input type="text" placeholder="Search" />
+        <input list="filters" class="filter-input" type="text" placeholder="Search" onchange="onFilter(this.value)" onkeyup="onFilter(this.value)" />
+        <datalist id="filters">
+          <option value="baby">
+          <option value="man">
+          <option value="politics">
+        </datalist>
       </div>
       <div class="image-gallery"></div>
+      <button class="im-flexible-btn" onclick="onRandomMeme()">I'm flexible</button>
     </section>
+    <!-- <section class="memes main-layout">
+      <div class="memes-search">
+        <input type="text" placeholder="Search" />
+      </div>
+      <div class="memes-gallery"></div>
+    </section> -->
     <section hidden class="editor full">
       <div class="canvas-container flex align-center justify-center">
         <a class="back-to-gallery" onclick="onBackToGallery()"
@@ -222,10 +234,14 @@
               placeholder="Enter Text"
               onkeyup="onTextChange(this.value)"
             />
+            <button class="save-btn" onclick="onSaveMeme()">Save</button>
+            <div class="image-container"></div>
           </div>
         </div>
       </div>
     </section>
+    <script src="js/utils.js"></script>
+    <script src="js/storage.service.js"></script>
     <script src="js/gallery.service.js"></script>
     <script src="js/gallery.controller.js"></script>
     <script src="js/meme.service.js"></script>

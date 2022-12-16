@@ -1,3 +1,5 @@
+var gGalleryFilterBy = ''
+
 const gImages = [
     {
         id: 1,
@@ -91,6 +93,16 @@ const gImages = [
     },
 ]
 
+function setGalleryFilterBy(str) {
+    gGalleryFilterBy = str
+}
+
 function getImages() {
-    return gImages
+    return gImages.filter(image => {
+        var isMatch = false
+        image.keywords.forEach(keyword => {
+            if (keyword.includes(gGalleryFilterBy)) isMatch = true
+        })
+        return isMatch
+    })
 }
