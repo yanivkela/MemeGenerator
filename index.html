@@ -104,7 +104,7 @@
                   />
                 </svg>
               </button>
-              <button class="line-editor-btn">
+              <button class="line-editor-btn" onclick="onRemoveLine()">
                 <svg
                   width="13"
                   height="16"
@@ -234,8 +234,21 @@
               placeholder="Enter Text"
               onkeyup="onTextChange(this.value)"
             />
+            <div class="stickers">
+              <button class="sticker-btn" onclick="onAddSticker('😊')">😊</button>
+              <button class="sticker-btn" onclick="onAddSticker('😂')">😂</button>
+              <button class="sticker-btn" onclick="onAddSticker('😍')">😍</button>
+              <button class="sticker-btn" onclick="onAddSticker('😒')">😒</button>
+              <button class="sticker-btn" onclick="onAddSticker('❤️')">❤️</button>
+              <button class="sticker-btn" onclick="onAddSticker('💣')">💣</button>
+              <button class="sticker-btn" onclick="onAddSticker('😎')">😎</button>
+              <button class="sticker-btn" onclick="onAddSticker('😁')">😁</button>
+              <button class="sticker-btn" onclick="onAddSticker('😘')">😘</button>
+              <button class="sticker-btn" onclick="onAddSticker('🤩')">🤩</button>
+              <button class="sticker-btn" onclick="onAddSticker('🤐')">🤐</button>
+              <button class="sticker-btn" onclick="onAddSticker('😶‍🌫️')">😶‍🌫️</button>
+              </div>
             <button class="save-btn" onclick="onSaveMeme()">Save</button>
-            <div class="image-container"></div>
           </div>
         </div>
       </div>

@@ -74,12 +74,22 @@ function initializeRandomMeme() {
   }
 }
 
+function setLineIndex(idx) {
+    gMeme.selectedLineIdx = idx
+}
+
 function setMeme(meme) {
     gMeme = meme
 }
 
 function getMeme() {
   return gMeme
+}
+
+function moveLine(dx, dy) {
+    var line = gMeme.lines[gMeme.selectedLineIdx]
+    line.x += dx
+    line.y += dy
 }
 
 function switchLine() {
@@ -106,6 +116,32 @@ function addNewLine() {
   }
   gMeme.lines.push(line)
   gMeme.selectedLineIdx = gMeme.lines.length - 1
+}
+
+function addSticker(sticker) {
+    var pos
+  if (!gMeme.lines.length) pos = { x: gElCanvas.width / 2, y: 40 }
+  else if (gMeme.lines.length === 1)
+    pos = { x: gElCanvas.width / 2, y: gElCanvas.height - 40 }
+  else pos = { x: gElCanvas.width / 2, y: gElCanvas.height / 2 }
+  var line = {
+    txt: sticker,
+    size: 60,
+    font: 'Impact',
+    fillColor: '#ffffff',
+    strokeColor: '#000000',
+    textAlign: 'center',
+    x: pos.x,
+    y: pos.y,
+  }
+  gMeme.lines.push(line)
+  gMeme.selectedLineIdx = gMeme.lines.length - 1
+}
+
+function removeLine() {
+    gMeme.lines.splice(gMeme.selectedLineIdx,1)
+    gMeme.selectedLineIdx = 0
+    return gMeme.lines[gMeme.selectedLineIdx]
 }
 
 function setFont(font) {

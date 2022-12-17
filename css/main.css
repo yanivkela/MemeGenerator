@@ -372,6 +372,32 @@ canvas {
     border: none;
 }
 
+.stickers {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: white;
+    border-top: 1px solid #DEDEDE;
+    margin-top: 30px;
+    justify-content: space-between;
+}
+
+.sticker-btn {
+    border: 0;
+    background-color: transparent;
+    font-size: 40px;
+    margin:0;
+    padding: 0;
+}
+
+.save-btn {
+    width: 100%;
+    height: 42px;
+    border: 0;
+    margin-top: 20px;
+    border-radius: 2em;
+    background-color: #FF9826;
+    color: white;
+}
 @media (min-width: 768px) {
 
     /* For Media query */
@@ -429,6 +455,18 @@ canvas {
     .text-input:focus {
         outline: none;
         border: 1px solid #EBEBEB;
+    }
+
+    .sticker-btn {
+        font-size: 60px;
+    }
+
+    .save-btn {
+        position: absolute;
+        width: 140px;
+        height: 54px;
+        right:30px;
+        bottom: 50px;
     }
 
     /* NAV */
