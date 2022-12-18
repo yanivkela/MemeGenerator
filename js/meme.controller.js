@@ -27,23 +27,23 @@ gElCanvas.ontouchmove = onMove
 gElCanvas.ontouchend = onUp
 
 function onUp(ev) {
-    if (!isDragging) return
-    isDragging = false
+  if (!isDragging) return
+  isDragging = false
 }
 
 function onMove(ev) {
-    if (!isDragging) return
-    ev.preventDefault()
-    pos = getEvPos(ev)
-    let mouseX = parseInt(pos.x)
-    let mouseY = parseInt(pos.y)
+  if (!isDragging) return
+  ev.preventDefault()
+  pos = getEvPos(ev)
+  let mouseX = parseInt(pos.x)
+  let mouseY = parseInt(pos.y)
 
-    let dx = mouseX - gStartX
-    let dy = mouseY - gStartY
-    moveLine(dx, dy)
-    renderMeme()
-    gStartX = mouseX
-    gStartY = mouseY
+  let dx = mouseX - gStartX
+  let dy = mouseY - gStartY
+  moveLine(dx, dy)
+  renderMeme()
+  gStartX = mouseX
+  gStartY = mouseY
 }
 
 function onDown(ev) {
@@ -78,25 +78,24 @@ function isMouseOnLine(startX, startY, line) {
 }
 
 function getEvPos(ev) {
-    // Gets the offset pos , the default pos
-    let pos = {
-        x: ev.offsetX,
-        y: ev.offsetY,
+  // Gets the offset pos , the default pos
+  let pos = {
+    x: ev.offsetX,
+    y: ev.offsetY,
+  }
+  // Check if its a touch ev
+  if (TOUCH_EVS.includes(ev.type)) {
+    //soo we will not trigger the mouse ev
+    ev.preventDefault()
+    //Gets the first touch point
+    ev = ev.changedTouches[0]
+    //Calc the right pos according to the touch screen
+    pos = {
+      x: ev.pageX - ev.target.offsetLeft - ev.target.clientLeft,
+      y: ev.pageY - ev.target.offsetTop - 50,
     }
-    // Check if its a touch ev
-    if (TOUCH_EVS.includes(ev.type)) {
-        console.log('ev:', ev)
-        //soo we will not trigger the mouse ev
-        ev.preventDefault()
-        //Gets the first touch point
-        ev = ev.changedTouches[0]
-        //Calc the right pos according to the touch screen
-        pos = {
-            x: ev.pageX - ev.target.offsetLeft - ev.target.clientLeft,
-            y: ev.pageY - ev.target.offsetTop - 50,
-        }
-    }
-    return pos
+  }
+  return pos
 }
 
 function renderMeme() {
@@ -140,36 +139,25 @@ function drawImg(imgIdx) {
 
 function onAddNewLine() {
   addNewLine()
-  document.querySelector('.text-input').value = ''
-  document.querySelector('.font-select').value = 'Impact'
-  document.querySelector('.stroke-color input').value = '#000000'
-  document.querySelector('.fill-color input').value = '#ffffff'
+  setSettings()
   renderMeme()
 }
 
 function onAddSticker(sticker) {
   addSticker(sticker)
+  setSettings()
   document.querySelector('.text-input').value = sticker
-  document.querySelector('.font-select').value = 'Impact'
-  document.querySelector('.stroke-color input').value = '#000000'
-  document.querySelector('.fill-color input').value = '#ffffff'
   renderMeme()
 }
 
 function onSwitchLine() {
   const line = switchLine()
-  document.querySelector('.text-input').value = line.txt
-  document.querySelector('.font-select').value = line.font
-  document.querySelector('.stroke-color input').value = line.strokeColor
-  document.querySelector('.fill-color input').value = line.fillColor
+  setSettings(line)
 }
 
 function onRemoveLine() {
   const firstLine = removeLine()
-  document.querySelector('.text-input').value = firstLine.txt
-  document.querySelector('.font-select').value = firstLine.font
-  document.querySelector('.stroke-color input').value = firstLine.strokeColor
-  document.querySelector('.fill-color input').value = firstLine.fillColor
+  setSettings(firstLine)
   renderMeme()
 }
 
@@ -209,10 +197,7 @@ function onRandomMeme() {
   resizeCanvas()
   initializeRandomMeme()
   const firstLine = getMeme().lines[0]
-  document.querySelector('.text-input').value = firstLine.txt
-  document.querySelector('.font-select').value = 'Impact'
-  document.querySelector('.stroke-color input').value = firstLine.strokeColor
-  document.querySelector('.fill-color input').value = firstLine.fillColor
+  setSettings(firstLine)
   renderMeme()
 }
 
@@ -234,19 +219,14 @@ function onMemeSelect(id) {
   resizeCanvas()
   setMeme(meme)
   const firstLine = meme.lines[0]
-  document.querySelector('.text-input').value = firstLine.txt
-  document.querySelector('.font-select').value = 'Impact'
-  document.querySelector('.stroke-color input').value = firstLine.strokeColor
-  document.querySelector('.fill-color input').value = firstLine.fillColor
+  setSettings(firstLine)
+
   renderMeme()
 }
 
 function onBackToGallery() {
   document.querySelector('.editor').classList.remove('flex')
-  document.querySelector('.text-input').value = ''
-  document.querySelector('.font-select').value = 'Impact'
-  document.querySelector('.stroke-color input').value = '#000000'
-  document.querySelector('.fill-color input').value = '#ffffff'
+  setSettings()
   document.querySelector('.gallery').hidden = false
 }
 
@@ -273,3 +253,17 @@ function renderSavedMemes() {
   })
   document.querySelector('.image-gallery').innerHTML = htmlSTRs.join('')
 }
+
+function setSettings(
+    line = {
+      txt: '',
+      font: 'Impact',
+      strokeColor: '#000000',
+      fillColor: '#ffffff',
+    }
+  ) {
+    document.querySelector('.text-input').value = line.txt
+    document.querySelector('.font-select').value = line.font
+    document.querySelector('.stroke-color input').value = line.strokeColor
+    document.querySelector('.fill-color input').value = line.fillColor
+  }
